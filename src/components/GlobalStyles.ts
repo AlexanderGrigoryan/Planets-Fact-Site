@@ -7,11 +7,13 @@ const GlobalStyles = createGlobalStyle`
     box-sizing: border-box;
 }
 
+
 body {
     width: 100%;
     min-height: 100vh;
     font-family: 'League Spartan', sans-serif;
     /* font-family: 'Antonio', sans-serif; */
+    background: #070724;
 }
 `;
 
