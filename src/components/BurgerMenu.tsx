@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import ArrowLogo from "../img/arrow.png";
+import { Link } from "react-router-dom";
 
 function BurgerMenu() {
   return (
@@ -9,7 +10,9 @@ function BurgerMenu() {
         <MenuItem>
           <ItemBlock>
             <Circle></Circle>
-            <Link href="#">Mercury</Link>
+            <Link to="/mercury" style={{ textDecoration: "none" }}>
+              <Links>Mercury</Links>
+            </Link>
           </ItemBlock>
           <ArrowButton>
             <ArrowImg src={ArrowLogo} alt="arrow logo" />
@@ -19,7 +22,9 @@ function BurgerMenu() {
         <MenuItem>
           <ItemBlock>
             <CircleVenus></CircleVenus>
-            <Link href="#">Venus</Link>
+            <Link to="/venus" style={{ textDecoration: "none" }}>
+              <Links>Venus</Links>
+            </Link>
           </ItemBlock>
           <ArrowButton>
             <ArrowImg src={ArrowLogo} alt="arrow logo" />
@@ -29,7 +34,9 @@ function BurgerMenu() {
         <MenuItem>
           <ItemBlock>
             <CircleEarth></CircleEarth>
-            <Link href="#">Earth</Link>
+            <Link to="/earth" style={{ textDecoration: "none" }}>
+              <Links>Earth</Links>
+            </Link>
           </ItemBlock>
           <ArrowButton>
             <ArrowImg src={ArrowLogo} alt="arrow logo" />
@@ -39,7 +46,9 @@ function BurgerMenu() {
         <MenuItem>
           <ItemBlock>
             <CircleMars></CircleMars>
-            <Link href="#">Mars</Link>
+            <Link to="/mars" style={{ textDecoration: "none" }}>
+              <Links>Mars</Links>
+            </Link>
           </ItemBlock>
           <ArrowButton>
             <ArrowImg src={ArrowLogo} alt="arrow logo" />
@@ -49,7 +58,9 @@ function BurgerMenu() {
         <MenuItem>
           <ItemBlock>
             <CircleJupiter></CircleJupiter>
-            <Link href="#">Jupiter</Link>
+            <Link to="/jupiter" style={{ textDecoration: "none" }}>
+              <Links>Jupiter</Links>
+            </Link>
           </ItemBlock>
           <ArrowButton>
             <ArrowImg src={ArrowLogo} alt="arrow logo" />
@@ -59,7 +70,9 @@ function BurgerMenu() {
         <MenuItem>
           <ItemBlock>
             <CircleSaturn></CircleSaturn>
-            <Link href="#">Saturn</Link>
+            <Link to="/saturn" style={{ textDecoration: "none" }}>
+              <Links>Saturn</Links>
+            </Link>
           </ItemBlock>
           <ArrowButton>
             <ArrowImg src={ArrowLogo} alt="arrow logo" />
@@ -69,7 +82,9 @@ function BurgerMenu() {
         <MenuItem>
           <ItemBlock>
             <CircleUranus></CircleUranus>
-            <Link href="#">Uranus</Link>
+            <Link to="/uranus" style={{ textDecoration: "none" }}>
+              <Links>Uranus</Links>
+            </Link>
           </ItemBlock>
           <ArrowButton>
             <ArrowImg src={ArrowLogo} alt="arrow logo" />
@@ -79,7 +94,9 @@ function BurgerMenu() {
         <MenuItem>
           <ItemBlock>
             <CircleNeptune></CircleNeptune>
-            <Link href="#">Neptune</Link>
+            <Link to="/neptune" style={{ textDecoration: "none" }}>
+              <Links>Neptune</Links>
+            </Link>
           </ItemBlock>
           <ArrowButton>
             <ArrowImg src={ArrowLogo} alt="arrow logo" />
@@ -156,7 +173,7 @@ const CircleNeptune = styled(Circle)`
   background: #497efa;
 `;
 
-const Link = styled.a`
+const Links = styled.a`
   font-size: 15px;
   font-weight: 700;
   letter-spacing: 1.3636363744735718px;

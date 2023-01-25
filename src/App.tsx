@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Helmet, HelmetProvider } from "react-helmet-async";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import styled from "styled-components";
 import BurgerMenu from "./components/BurgerMenu";
 import GlobalStyles from "./components/GlobalStyles";
 import Header from "./components/Header";
 import Background from "./img/background-stars.svg";
+import Planet from "./pages/Planet";
 
 function App() {
   const [showMenu, setShowMenu] = useState<boolean>(false);
@@ -27,7 +28,8 @@ function App() {
         {showMenu ? <BurgerMenu /> : null}
 
         <Routes>
-          <Route path="/" />
+          <Route path="/" element={<Navigate to="/mercury" />} />
+          <Route path="/:name" element={<Planet />} />
         </Routes>
       </MainContainer>
     </>
