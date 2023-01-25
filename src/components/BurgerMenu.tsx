@@ -2,106 +2,43 @@ import React from "react";
 import styled from "styled-components";
 import ArrowLogo from "../img/arrow.png";
 import { Link } from "react-router-dom";
+import data from "../data.json";
 
-function BurgerMenu() {
+interface Props {
+  setShowMenu: React.Dispatch<React.SetStateAction<boolean>>;
+  colors: string[];
+}
+
+function BurgerMenu(props: Props) {
+  const { setShowMenu, colors } = props;
+
   return (
     <Container>
       <Menu>
-        <MenuItem>
-          <ItemBlock>
-            <Circle></Circle>
-            <Link to="/mercury" style={{ textDecoration: "none" }}>
-              <Links>Mercury</Links>
-            </Link>
-          </ItemBlock>
-          <ArrowButton>
-            <ArrowImg src={ArrowLogo} alt="arrow logo" />
-          </ArrowButton>
-        </MenuItem>
-        <BurgerLine></BurgerLine>
-        <MenuItem>
-          <ItemBlock>
-            <CircleVenus></CircleVenus>
-            <Link to="/venus" style={{ textDecoration: "none" }}>
-              <Links>Venus</Links>
-            </Link>
-          </ItemBlock>
-          <ArrowButton>
-            <ArrowImg src={ArrowLogo} alt="arrow logo" />
-          </ArrowButton>
-        </MenuItem>
-        <BurgerLine></BurgerLine>
-        <MenuItem>
-          <ItemBlock>
-            <CircleEarth></CircleEarth>
-            <Link to="/earth" style={{ textDecoration: "none" }}>
-              <Links>Earth</Links>
-            </Link>
-          </ItemBlock>
-          <ArrowButton>
-            <ArrowImg src={ArrowLogo} alt="arrow logo" />
-          </ArrowButton>
-        </MenuItem>
-        <BurgerLine></BurgerLine>
-        <MenuItem>
-          <ItemBlock>
-            <CircleMars></CircleMars>
-            <Link to="/mars" style={{ textDecoration: "none" }}>
-              <Links>Mars</Links>
-            </Link>
-          </ItemBlock>
-          <ArrowButton>
-            <ArrowImg src={ArrowLogo} alt="arrow logo" />
-          </ArrowButton>
-        </MenuItem>
-        <BurgerLine></BurgerLine>
-        <MenuItem>
-          <ItemBlock>
-            <CircleJupiter></CircleJupiter>
-            <Link to="/jupiter" style={{ textDecoration: "none" }}>
-              <Links>Jupiter</Links>
-            </Link>
-          </ItemBlock>
-          <ArrowButton>
-            <ArrowImg src={ArrowLogo} alt="arrow logo" />
-          </ArrowButton>
-        </MenuItem>
-        <BurgerLine></BurgerLine>
-        <MenuItem>
-          <ItemBlock>
-            <CircleSaturn></CircleSaturn>
-            <Link to="/saturn" style={{ textDecoration: "none" }}>
-              <Links>Saturn</Links>
-            </Link>
-          </ItemBlock>
-          <ArrowButton>
-            <ArrowImg src={ArrowLogo} alt="arrow logo" />
-          </ArrowButton>
-        </MenuItem>
-        <BurgerLine></BurgerLine>
-        <MenuItem>
-          <ItemBlock>
-            <CircleUranus></CircleUranus>
-            <Link to="/uranus" style={{ textDecoration: "none" }}>
-              <Links>Uranus</Links>
-            </Link>
-          </ItemBlock>
-          <ArrowButton>
-            <ArrowImg src={ArrowLogo} alt="arrow logo" />
-          </ArrowButton>
-        </MenuItem>
-        <BurgerLine></BurgerLine>
-        <MenuItem>
-          <ItemBlock>
-            <CircleNeptune></CircleNeptune>
-            <Link to="/neptune" style={{ textDecoration: "none" }}>
-              <Links>Neptune</Links>
-            </Link>
-          </ItemBlock>
-          <ArrowButton>
-            <ArrowImg src={ArrowLogo} alt="arrow logo" />
-          </ArrowButton>
-        </MenuItem>
+        {data.map((item: any, index: number) => {
+          return (
+            <>
+              <MenuItem>
+                <ItemBlock>
+                  <Circle color={colors[index]}></Circle>
+                  <Link
+                    to={`${item.name.toLowerCase()}`}
+                    style={{
+                      textDecoration: "none",
+                    }}
+                    onClick={() => setShowMenu(false)}
+                  >
+                    <ItemName>{item.name}</ItemName>
+                  </Link>
+                </ItemBlock>
+                <ArrowButton>
+                  <ArrowImg src={ArrowLogo} alt="arrow Logo" />
+                </ArrowButton>
+              </MenuItem>
+              <BurgerLine></BurgerLine>
+            </>
+          );
+        })}
       </Menu>
     </Container>
   );
@@ -111,11 +48,13 @@ export default BurgerMenu;
 
 const Container = styled.div`
   background: #070724;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
+  max-height: 100vh;
   position: absolute;
   top: 110px;
   left: 0;
+  z-index: 100;
 `;
 
 const Menu = styled.div`
@@ -138,47 +77,20 @@ const ItemBlock = styled.div`
   column-gap: 25px;
 `;
 
-const Circle = styled.div`
+const Circle = styled.span`
   height: 20px;
   width: 20px;
   border-radius: 50%;
-  background: #def4fc;
+  background: ${(props) => props.color};
 `;
 
-const CircleVenus = styled(Circle)`
-  background: #f7cc7f;
-`;
-
-const CircleEarth = styled(Circle)`
-  background: #545bfe;
-`;
-
-const CircleMars = styled(Circle)`
-  background: #ff6a45;
-`;
-
-const CircleJupiter = styled(Circle)`
-  background: #ecad7a;
-`;
-
-const CircleSaturn = styled(Circle)`
-  background: #fccb6b;
-`;
-
-const CircleUranus = styled(Circle)`
-  background: #65f0d5;
-`;
-
-const CircleNeptune = styled(Circle)`
-  background: #497efa;
-`;
-
-const Links = styled.a`
+const ItemName = styled.p`
   font-size: 15px;
   font-weight: 700;
   letter-spacing: 1.3636363744735718px;
   text-transform: uppercase;
   text-decoration: none;
+  height: 100%;
   color: #ffffff;
 `;
 
