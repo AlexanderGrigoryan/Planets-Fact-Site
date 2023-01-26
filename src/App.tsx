@@ -10,7 +10,16 @@ import Planet from "./pages/Planet";
 
 function App() {
   const [showMenu, setShowMenu] = useState<boolean>(false);
-  const colors = ['#419EBB', '#F7CC7F', '#545BFE', '#FF6A45', '#ECAD7A', '#FCCB6B', '#65F0D5', '#497EFA'];
+  const colors = [
+    "#419EBB",
+    "#F7CC7F",
+    "#545BFE",
+    "#FF6A45",
+    "#ECAD7A",
+    "#FCCB6B",
+    "#65F0D5",
+    "#497EFA",
+  ];
 
   return (
     <>
@@ -26,7 +35,9 @@ function App() {
 
       <MainContainer>
         <Header showMenu={showMenu} setShowMenu={setShowMenu} />
-        {showMenu ? <BurgerMenu setShowMenu={setShowMenu} colors={colors} /> : null}
+        {showMenu ? (
+          <BurgerMenu setShowMenu={setShowMenu} colors={colors} />
+        ) : null}
 
         <Routes>
           <Route path="/" element={<Navigate to="/mercury" />} />
@@ -40,7 +51,6 @@ function App() {
 export default App;
 
 const MainContainer = styled.div`
-  padding-top: 16px;
   background-image: url(${Background});
   background-repeat: no-repeat;
   background-size: cover;

@@ -12,7 +12,7 @@ interface Props {
 function Header(props: Props) {
   const { showMenu, setShowMenu } = props;
   return (
-    <>
+    <HeaderContainer>
       <Container>
         <Logo>The Planets</Logo>
         <BurgerButton onClick={() => setShowMenu(!showMenu)}>
@@ -24,18 +24,28 @@ function Header(props: Props) {
         </BurgerButton>
       </Container>
       <Line />
-    </>
+    </HeaderContainer>
   );
 }
 
 export default Header;
+
+const HeaderContainer = styled.div`
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  background: #070724;
+`;
 
 const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 24px;
-  margin-bottom: 16px;
+  width: 100%;
+  height: 68px;
 `;
 
 const Logo = styled.p`

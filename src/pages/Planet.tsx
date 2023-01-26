@@ -4,11 +4,7 @@ import styled from "styled-components";
 import Line from "../components/Line";
 import data from "../data.json";
 
-
-
 function Planet() {
-  
-
   const params = useParams();
 
   const planet = data.find(
@@ -61,10 +57,10 @@ function Planet() {
 export default Planet;
 
 const Navigation = styled.div`
-  padding: 0 24px;
+  padding: 20px 24px;
   display: flex;
   justify-content: space-between;
-  margin: 20px 0;
+  margin-top: 69px;
 `;
 
 const Links = styled.a`

@@ -51,10 +51,11 @@ const Container = styled.div`
   width: 100vw;
   height: 100vh;
   max-height: 100vh;
-  position: absolute;
-  top: 110px;
+  position: fixed;
+  top: 69px;
   left: 0;
   z-index: 100;
+  padding-top: 44px;
 `;
 
 const Menu = styled.div`
