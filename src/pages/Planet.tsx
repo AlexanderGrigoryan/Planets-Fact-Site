@@ -4,7 +4,14 @@ import styled from "styled-components";
 import Line from "../components/Line";
 import data from "../data.json";
 
-function Planet() {
+interface Props {
+  info: string;
+  setInfo: React.Dispatch<React.SetStateAction<string>>;
+}
+
+function Planet(props: Props) {
+  const { info, setInfo } = props;
+
   const params = useParams();
 
   const planet = data.find(
@@ -14,22 +21,54 @@ function Planet() {
   return (
     <>
       <Navigation>
-        <Links>Overview</Links>
-        <Links>Structure</Links>
-        <Links>Surface</Links>
+        <Links onClick={() => setInfo("overview")}>Overview</Links>
+        <Links onClick={() => setInfo("structure")}>Structure</Links>
+        <Links onClick={() => setInfo("surface")}>Surface</Links>
       </Navigation>
       <Line></Line>
       <Container>
         <Content>
-          <Image src={planet?.images.planet} alt="planet image" />
+          {info === "overview" ? (
+            <Image src={planet?.images.planet} alt="planet image" />
+          ) : info === "structure" ? (
+            <Image src={planet?.images.internal} alt="planet image" />
+          ) : (
+            <>
+              <Image src={planet?.images.planet} alt="planet image" />
+              <ImageGeology src={planet?.images.geology} alt="planet image" />
+            </>
+          )}
           <Name>{planet?.name}</Name>
-          <Description>{planet?.overview.content}</Description>
-          <Source>
-            Source :{" "}
-            <SourceLink target="_blank" href={planet?.overview.source}>
-              Wikipedia
-            </SourceLink>
-          </Source>
+          {info === "overview" ? (
+            <Description>{planet?.overview.content}</Description>
+          ) : info === "structure" ? (
+            <Description>{planet?.structure.content}</Description>
+          ) : (
+            <Description>{planet?.geology.content}</Description>
+          )}
+
+          {info === "overview" ? (
+            <Source>
+              Source :{" "}
+              <SourceLink target="_blank" href={planet?.overview.source}>
+                Wikipedia
+              </SourceLink>
+            </Source>
+          ) : info === "structure" ? (
+            <Source>
+              Source :{" "}
+              <SourceLink target="_blank" href={planet?.structure.source}>
+                Wikipedia
+              </SourceLink>
+            </Source>
+          ) : (
+            <Source>
+              Source :{" "}
+              <SourceLink target="_blank" href={planet?.geology.source}>
+                Wikipedia
+              </SourceLink>
+            </Source>
+          )}
         </Content>
         <Details>
           <InfoBlock>
@@ -63,13 +102,16 @@ const Navigation = styled.div`
   margin-top: 69px;
 `;
 
-const Links = styled.a`
+const Links = styled.button`
   font-size: 9px;
   font-weight: 700;
   line-height: 10px;
   letter-spacing: 1.9285714626312256px;
   text-transform: uppercase;
   color: #ffffff;
+  background: inherit;
+  border: none;
+  cursor: pointer;
 `;
 
 const Container = styled.div`
@@ -92,6 +134,12 @@ const Content = styled.div`
 const Image = styled.img`
   width: 111px;
   height: 111px;
+`;
+
+const ImageGeology = styled.img`
+  width: 60px;
+  height: 60px;
+  margin-top: -25px;
 `;
 
 const Name = styled.h2`
@@ -129,6 +177,9 @@ const SourceLink = styled.a`
 `;
 
 const Details = styled.div`
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
   margin: 28px 0 47px;
 `;
 

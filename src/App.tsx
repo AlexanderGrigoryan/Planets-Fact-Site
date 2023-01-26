@@ -21,6 +21,8 @@ function App() {
     "#497EFA",
   ];
 
+  const [info, setInfo] = useState<string>("overview");
+
   return (
     <>
       <GlobalStyles />
@@ -41,7 +43,10 @@ function App() {
 
         <Routes>
           <Route path="/" element={<Navigate to="/mercury" />} />
-          <Route path="/:name" element={<Planet />} />
+          <Route
+            path="/:name"
+            element={<Planet info={info} setInfo={setInfo} />}
+          />
         </Routes>
       </MainContainer>
     </>
