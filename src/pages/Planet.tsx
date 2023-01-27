@@ -1,6 +1,6 @@
 import React from "react";
-import { useParams } from "react-router";
-import styled from "styled-components";
+import { useLocation, useParams } from "react-router";
+import styled, { css } from "styled-components";
 import Line from "../components/Line";
 import data from "../data.json";
 
@@ -12,7 +12,11 @@ interface Props {
 function Planet(props: Props) {
   const { info, setInfo } = props;
 
+  const location = useLocation();
   const params = useParams();
+  const pathname = location.pathname;
+
+  console.log(pathname);
 
   const planet = data.find(
     (element) => element.name.toLowerCase() === params.name
@@ -21,9 +25,18 @@ function Planet(props: Props) {
   return (
     <>
       <Navigation>
-        <Links onClick={() => setInfo("overview")}>Overview</Links>
-        <Links onClick={() => setInfo("structure")}>Structure</Links>
-        <Links onClick={() => setInfo("surface")}>Surface</Links>
+        <NavLink>
+          <Links onClick={() => setInfo("overview")}>Overview</Links>
+          <NavLine pathname={pathname} active={info === "overview"}></NavLine>
+        </NavLink>
+        <NavLink>
+          <Links onClick={() => setInfo("structure")}>Structure</Links>
+          <NavLine pathname={pathname} active={info === "structure"}></NavLine>
+        </NavLink>
+        <NavLink>
+          <Links onClick={() => setInfo("surface")}>Surface</Links>
+          <NavLine pathname={pathname} active={info === "surface"}></NavLine>
+        </NavLink>
       </Navigation>
       <Line></Line>
       <Container>
@@ -96,11 +109,13 @@ function Planet(props: Props) {
 export default Planet;
 
 const Navigation = styled.div`
-  padding: 20px 24px;
+  padding: 20px 24px 0 24px;
   display: flex;
   justify-content: space-between;
   margin-top: 69px;
 `;
+
+const NavLink = styled.div``;
 
 const Links = styled.button`
   font-size: 9px;
@@ -113,6 +128,34 @@ const Links = styled.button`
   border: none;
   cursor: pointer;
 `;
+
+interface NavLineProps {
+  active: boolean;
+  pathname: string;
+}
+
+const NavLine = styled.div(
+  (props: NavLineProps) => css`
+    width: ${props.active ? "100%" : "0"};
+    height: 4px;
+    background: ${props.pathname === "/mercury"
+      ? "#419EBB"
+      : props.pathname === "/venus"
+      ? "#EDA249"
+      : props.pathname === "/earth"
+      ? "#6D2ED5"
+      : props.pathname === "/mars"
+      ? "#D14C32"
+      : props.pathname === "/jupiter"
+      ? "#D83A34"
+      : props.pathname === "/saturn"
+      ? "#CD5120"
+      : props.pathname === "/uranus"
+      ? "#1EC1A2 "
+      : "#2D68F0"};
+    margin-top: 17px;
+  `
+);
 
 const Container = styled.div`
   padding: 0 24px;
