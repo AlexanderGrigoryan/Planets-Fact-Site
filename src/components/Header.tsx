@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import BurgerIcon from "../svg/BurgerIcon";
 import CloseIcon from "../img/icon-remove.svg";
-import Line from "./Line";
+import Navigation from "./Navigation";
 
 interface Props {
   showMenu: boolean;
@@ -22,6 +22,7 @@ function Header(props: Props) {
             <BurgerIcon />
           )}
         </BurgerButton>
+        <Navigation />
       </Container>
       <Line />
     </HeaderContainer>
@@ -37,6 +38,12 @@ const HeaderContainer = styled.div`
   left: 0;
   z-index: 10;
   background: #070724;
+
+  @media screen and (min-width: 768px) {
+    background: inherit;
+    position: relative;
+    z-index: 0;
+  }
 `;
 
 const Container = styled.div`
@@ -46,6 +53,11 @@ const Container = styled.div`
   padding: 0 24px;
   width: 100%;
   height: 68px;
+
+  @media screen and (min-width: 768px) {
+    flex-direction: column;
+    padding: 32px 50px 0 50px;
+  }
 `;
 
 const Logo = styled.p`
@@ -64,6 +76,20 @@ const BurgerButton = styled.button`
   border: none;
   background: inherit;
   cursor: pointer;
+
+  @media screen and (min-width: 768px) {
+    display: none;
+  }
 `;
 
 const CloseImg = styled.img``;
+
+const Line = styled.div`
+  width: 100%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.2);
+
+  @media screen and (min-width: 768px) {
+    display: none;
+  }
+`;

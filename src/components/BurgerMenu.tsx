@@ -18,7 +18,7 @@ function BurgerMenu(props: Props) {
         {data.map((item: any, index: number) => {
           return (
             <>
-              <MenuItem>
+              <MenuItem key={index}>
                 <ItemBlock>
                   <Circle color={colors[index]}></Circle>
                   <Link
