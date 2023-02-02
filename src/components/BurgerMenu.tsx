@@ -15,7 +15,7 @@ function BurgerMenu(props: Props) {
   return (
     <Container>
       <Menu>
-        {data.map((item: any, index: number) => {
+        {data.map((item, index) => {
           return (
             <>
               <MenuItem key={index}>

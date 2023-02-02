@@ -15,9 +15,9 @@ function Navigation(props: NavigationProps) {
   return (
     <Container>
       <ListMenu>
-        {data.map((item) => {
+        {data.map((item, index) => {
           return (
-            <List>
+            <List key={index}>
               {activePlanet === item.name ? (
                 <LinkLine pathname={pathname}></LinkLine>
               ) : null}
