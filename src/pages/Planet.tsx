@@ -1,22 +1,18 @@
 import React from "react";
-import { useLocation, useParams } from "react-router";
 import styled, { css } from "styled-components";
+import { useParams } from "react-router";
 import data from "../data.json";
 
 interface Props {
   info: string;
   setInfo: React.Dispatch<React.SetStateAction<string>>;
+  pathname: string;
 }
 
 function Planet(props: Props) {
-  const { info, setInfo } = props;
+  const { info, setInfo, pathname } = props;
 
-  const location = useLocation();
   const params = useParams();
-  const pathname = location.pathname;
-
-  console.log(pathname);
-
   const planet = data.find(
     (element) => element.name.toLowerCase() === params.name
   );
@@ -38,9 +34,9 @@ function Planet(props: Props) {
         </NavLink>
       </Navigation>
       <Line></Line>
-      <Container>
-        <Content>
-          <ImageBlock>
+      <Container pathname={pathname}>
+        <Content pathname={pathname}>
+          <ImageBlock pathname={pathname}>
             {info === "overview" ? (
               <Image
                 pathname={pathname}
@@ -54,14 +50,18 @@ function Planet(props: Props) {
                 alt="planet image"
               />
             ) : (
-              <>
+              <GeologyBlock>
                 <Image
                   pathname={pathname}
                   src={planet?.images.planet}
                   alt="planet image"
                 />
-                <ImageGeology src={planet?.images.geology} alt="planet image" />
-              </>
+                <ImageGeology
+                  pathname={pathname}
+                  src={planet?.images.geology}
+                  alt="planet image"
+                />
+              </GeologyBlock>
             )}
           </ImageBlock>
           <FlexContainer>
@@ -74,7 +74,6 @@ function Planet(props: Props) {
               ) : (
                 <Description>{planet?.geology.content}</Description>
               )}
-
               {info === "overview" ? (
                 <Source>
                   Source :{" "}
@@ -182,6 +181,7 @@ const NavLine = styled.div(
   (props: NavLineProps) => css`
     width: ${props.active ? "100%" : "0"};
     height: 4px;
+    margin-top: 17px;
     background: ${props.pathname === "/mercury"
       ? "#419EBB"
       : props.pathname === "/venus"
@@ -197,7 +197,6 @@ const NavLine = styled.div(
       : props.pathname === "/uranus"
       ? "#1EC1A2 "
       : "#2D68F0"};
-    margin-top: 17px;
   `
 );
 
@@ -205,11 +204,14 @@ const NavigationResp = styled.div`
   display: none;
 
   @media screen and (min-width: 768px) {
-    padding: 20px 24px 0 24px;
     display: flex;
     flex-direction: column;
     row-gap: 16px;
-    margin-top: 69px;
+    padding-left: 20px;
+  }
+
+  @media screen and (min-width: 1024px) {
+    padding: 0;
   }
 `;
 
@@ -270,6 +272,11 @@ const LinksResp = styled.button(
         ? "#2D68F0"
         : "rgba(216, 216, 216, 0.2)"};
     }
+
+    @media screen and (min-width: 1024px) {
+      width: 350px;
+      height: 48px;
+    }
   `
 );
 
@@ -277,37 +284,161 @@ const Span = styled.span`
   color: rgba(255, 255, 255, 0.5);
 `;
 
-const Container = styled.div`
-  padding: 0 24px;
-  margin-top: 95px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+interface ContainerProps {
+  pathname: string;
+}
 
-  @media screen and (min-width: 768px) {
-    margin-top: 54px;
-    padding: 0 40px;
-  }
-`;
+const Container = styled.div(
+  (props: ContainerProps) => css`
+    max-width: 1440px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0 24px;
+    margin-top: ${props.pathname === "/mercury"
+      ? "95px"
+      : props.pathname === "/venus"
+      ? "74px"
+      : props.pathname === "/earth"
+      ? "64px"
+      : props.pathname === "/mars"
+      ? "87px"
+      : props.pathname === "/jupiter"
+      ? "39px"
+      : props.pathname === "/saturn"
+      ? "24px"
+      : props.pathname === "/uranus"
+      ? "63px"
+      : "64px"};
 
-const Content = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-`;
+    @media screen and (min-width: 768px) {
+      padding: 0 40px;
+      margin-top: ${props.pathname === "/mercury"
+        ? "146px"
+        : props.pathname === "/venus"
+        ? "112px"
+        : props.pathname === "/earth"
+        ? "96px"
+        : props.pathname === "/mars"
+        ? "132px"
+        : props.pathname === "/jupiter"
+        ? "54px"
+        : props.pathname === "/saturn"
+        ? "27px"
+        : props.pathname === "/uranus"
+        ? "93px"
+        : "96px"};
+    }
 
-const ImageBlock = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
+    @media screen and (min-width: 1440px) {
+      padding: 0 165px;
+      margin-top: ${props.pathname === "/mercury"
+        ? "126px"
+        : props.pathname === "/venus"
+        ? "126px"
+        : props.pathname === "/earth"
+        ? "126px"
+        : props.pathname === "/mars"
+        ? "126px"
+        : props.pathname === "/jupiter"
+        ? "96px"
+        : props.pathname === "/saturn"
+        ? "70px"
+        : props.pathname === "/uranus"
+        ? "126px"
+        : "126px"};
+    }
+  `
+);
+
+interface ContentProps {
+  pathname: string;
+}
+
+const Content = styled.div(
+  (props: ContentProps) => css`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    @media screen and (min-width: 768px) {
+      width: 100%;
+    }
+
+    @media screen and (min-width: 1024px) {
+      flex-direction: row;
+      justify-content: flex-end;
+      column-gap: ${props.pathname === "/mercury"
+        ? "300px"
+        : props.pathname === "/venus"
+        ? "245px"
+        : props.pathname === "/earth"
+        ? "220px"
+        : props.pathname === "/mars"
+        ? "277px"
+        : props.pathname === "/jupiter"
+        ? "154px"
+        : props.pathname === "/saturn"
+        ? "112px"
+        : props.pathname === "/uranus"
+        ? "216px"
+        : "220px"};
+    }
+  `
+);
 
 interface ImageProps {
   pathname: string;
 }
+
+const ImageBlock = styled.div(
+  (props: ImageProps) => css`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: ${props.pathname === "/mercury"
+      ? "98px"
+      : props.pathname === "/venus"
+      ? "76px"
+      : props.pathname === "/earth"
+      ? "67px"
+      : props.pathname === "/mars"
+      ? "88px"
+      : props.pathname === "/jupiter"
+      ? "41px"
+      : props.pathname === "/saturn"
+      ? "24px"
+      : props.pathname === "/uranus"
+      ? "65px"
+      : "67px"};
+
+    @media screen and (min-width: 768px) {
+      margin-bottom: ${props.pathname === "/mercury"
+        ? "130px"
+        : props.pathname === "/venus"
+        ? "95px"
+        : props.pathname === "/earth"
+        ? "79px"
+        : props.pathname === "/mars"
+        ? "115px"
+        : props.pathname === "/jupiter"
+        ? "37px"
+        : props.pathname === "/saturn"
+        ? "11px"
+        : props.pathname === "/uranus"
+        ? "77px"
+        : "79px"};
+    }
+
+    @media screen and (min-width: 1024px) {
+      margin-bottom: 0;
+    }
+  `
+);
 
 const Image = styled.img(
   (props: ImageProps) => css`
@@ -322,7 +453,7 @@ const Image = styled.img(
       : props.pathname === "/jupiter"
       ? "224px"
       : props.pathname === "/saturn"
-      ? "305px"
+      ? "256px"
       : props.pathname === "/uranus"
       ? "176px"
       : "173px"};
@@ -338,7 +469,7 @@ const Image = styled.img(
       : props.pathname === "/jupiter"
       ? "224px"
       : props.pathname === "/saturn"
-      ? "305px"
+      ? "256px"
       : props.pathname === "/uranus"
       ? "176px"
       : "173px"};
@@ -355,7 +486,7 @@ const Image = styled.img(
         : props.pathname === "/jupiter"
         ? "369px"
         : props.pathname === "/saturn"
-        ? "503px"
+        ? "422px"
         : props.pathname === "/uranus"
         ? "290px"
         : "285px"};
@@ -371,42 +502,104 @@ const Image = styled.img(
         : props.pathname === "/jupiter"
         ? "369px"
         : props.pathname === "/saturn"
-        ? "503px"
+        ? "422px"
         : props.pathname === "/uranus"
         ? "290px"
         : "285px"};
     }
+
+    @media screen and (min-width: 1024px) {
+      width: ${props.pathname === "/mercury"
+        ? "290px"
+        : props.pathname === "/venus"
+        ? "400px"
+        : props.pathname === "/earth"
+        ? "450px"
+        : props.pathname === "/mars"
+        ? "336px"
+        : props.pathname === "/jupiter"
+        ? "582px"
+        : props.pathname === "/saturn"
+        ? "666px"
+        : props.pathname === "/uranus"
+        ? "458px"
+        : "450px"};
+
+      height: ${props.pathname === "/mercury"
+        ? "290px"
+        : props.pathname === "/venus"
+        ? "400px"
+        : props.pathname === "/earth"
+        ? "450px"
+        : props.pathname === "/mars"
+        ? "336px"
+        : props.pathname === "/jupiter"
+        ? "582px"
+        : props.pathname === "/saturn"
+        ? "666px"
+        : props.pathname === "/uranus"
+        ? "458px"
+        : "450px"};
+    }
   `
 );
 
-const ImageGeology = styled.img`
-  width: 60px;
-  height: 60px;
-  margin-top: -25px;
-  margin-right: 25px;
-
-  @media screen and (min-width: 768px) {
-    width: 113px;
-    height: 149px;
-  }
-
-  @media screen and (min-width: 1024px) {
-    width: 163px;
-    height: 199px;
-  }
+const GeologyBlock = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
+
+interface ImageGeologyProps {
+  pathname: string;
+}
+
+const ImageGeology = styled.img(
+  (props: ImageGeologyProps) => css`
+    width: 60px;
+    height: 60px;
+    margin-top: ${[props.pathname === "/saturn" ? "-70px" : "-20px"]};
+
+    @media screen and (min-width: 768px) {
+      width: 113px;
+      height: 149px;
+      margin-top: ${[props.pathname === "/saturn" ? "-120px" : "-45px"]};
+    }
+
+    @media screen and (min-width: 1024px) {
+      width: 163px;
+      height: 199px;
+      margin-top: ${[props.pathname === "/saturn" ? "-195px" : "-75px"]};
+    }
+  `
+);
 
 const FlexContainer = styled.div`
   @media screen and (min-width: 768px) {
     display: flex;
     align-items: center;
-    column-gap: 69px;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  @media screen and (min-width: 1024px) {
+    flex-direction: column;
+    max-width: 350px;
+    align-items: flex-start;
   }
 `;
 
 const InfoContainer = styled.div`
   @media screen and (min-width: 768px) {
     text-align: left;
+    max-width: 339px;
+  }
+
+  @media screen and (min-width: 1024px) {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 40px;
   }
 `;
 
@@ -416,12 +609,19 @@ const Name = styled.h2`
   font-weight: 400;
   line-height: 52px;
   text-transform: uppercase;
-  margin: 98px 0 16px;
+  margin-bottom: 16px;
   color: #ffffff;
 
   @media screen and (min-width: 768px) {
     font-size: 48px;
     line-height: 62px;
+    margin-bottom: 22px;
+  }
+
+  @media screen and (min-width: 1024px) {
+    margin: 0 0 23px 0;
+    font-size: 80px;
+    line-height: 103.52px;
   }
 `;
 
@@ -431,6 +631,16 @@ const Description = styled.p`
   line-height: 22px;
   margin-bottom: 32px;
   color: #ffffff;
+
+  @media screen and (min-width: 768px) {
+    margin-bottom: 22px;
+  }
+
+  @media screen and (min-width: 1024px) {
+    margin-bottom: 24px;
+    font-size: 14px;
+    line-height: 25px;
+  }
 `;
 
 const Source = styled.p`
@@ -439,6 +649,11 @@ const Source = styled.p`
   font-weight: 400;
   line-height: 25px;
   color: rgba(255, 255, 255, 0.5);
+
+  @media screen and (min-width: 1024px) {
+    font-size: 14px;
+    line-height: 25px;
+  }
 `;
 
 const SourceLink = styled.a`
@@ -446,7 +661,12 @@ const SourceLink = styled.a`
   font-size: 12px;
   font-weight: 700;
   line-height: 25px;
-  color: rgba(255, 255, 255, 0.5); ;
+  color: rgba(255, 255, 255, 0.5);
+
+  @media screen and (min-width: 1024px) {
+    font-size: 14px;
+    line-height: 25px;
+  }
 `;
 
 const Details = styled.div`
@@ -460,8 +680,13 @@ const Details = styled.div`
   @media screen and (min-width: 768px) {
     flex-direction: row;
     column-gap: 11px;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
+  }
+
+  @media screen and (min-width: 1024px) {
+    column-gap: 30px;
+    margin: 78px 0 56px;
   }
 `;
 
@@ -483,6 +708,13 @@ const InfoBlock = styled.div`
     row-gap: 6px;
     padding: 15px 0 0 15px;
   }
+
+  @media screen and (min-width: 1024px) {
+    width: 255px;
+    height: 128px;
+    row-gap: 4px;
+    padding: 20px 0 0 23px;
+  }
 `;
 
 const Category = styled.p`
@@ -495,6 +727,12 @@ const Category = styled.p`
 
   @media screen and (min-width: 768px) {
     align-self: flex-start;
+  }
+
+  @media screen and (min-width: 1024px) {
+    font-size: 11px;
+    line-height: 25px;
+    letter-spacing: 1px;
   }
 `;
 
@@ -513,6 +751,12 @@ const CategoryAnswer = styled.p`
     line-height: 31.05px;
     letter-spacing: -0.9px;
   }
+
+  @media screen and (min-width: 1024px) {
+    font-size: 40px;
+    line-height: 51.76px;
+    letter-spacing: -1.5px;
+  }
 `;
 
 const Line = styled.div`
@@ -522,5 +766,9 @@ const Line = styled.div`
 
   @media screen and (min-width: 768px) {
     margin-top: 93px;
+  }
+
+  @media screen and (min-width: 1024px) {
+    margin-top: 27px;
   }
 `;

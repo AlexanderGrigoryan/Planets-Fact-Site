@@ -1,16 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
+import Navigation from "./Navigation";
 import BurgerIcon from "../svg/BurgerIcon";
 import CloseIcon from "../img/icon-remove.svg";
-import Navigation from "./Navigation";
 
 interface Props {
   showMenu: boolean;
   setShowMenu: React.Dispatch<React.SetStateAction<boolean>>;
+  pathname: string;
 }
 
 function Header(props: Props) {
-  const { showMenu, setShowMenu } = props;
+  const { showMenu, setShowMenu, pathname } = props;
+
   return (
     <HeaderContainer>
       <Container>
@@ -22,7 +24,7 @@ function Header(props: Props) {
             <BurgerIcon />
           )}
         </BurgerButton>
-        <Navigation />
+        <Navigation pathname={pathname} />
       </Container>
       <Line />
     </HeaderContainer>
@@ -58,6 +60,11 @@ const Container = styled.div`
     flex-direction: column;
     padding: 32px 50px 0 50px;
   }
+
+  @media screen and (min-width: 1024px) {
+    flex-direction: row;
+    justify-content: space-between;
+  }
 `;
 
 const Logo = styled.p`
@@ -68,6 +75,7 @@ const Logo = styled.p`
   letter-spacing: -1.0499999523162842px;
   text-transform: uppercase;
   color: #ffffff;
+  white-space: nowrap;
 `;
 
 const BurgerButton = styled.button`

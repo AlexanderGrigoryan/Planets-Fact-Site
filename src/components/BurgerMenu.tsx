@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import ArrowLogo from "../img/arrow.png";
 import { Link } from "react-router-dom";
 import data from "../data.json";
+import ArrowLogo from "../img/arrow.png";
 
 interface Props {
   setShowMenu: React.Dispatch<React.SetStateAction<boolean>>;

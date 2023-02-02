@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import { Helmet, HelmetProvider } from "react-helmet-async";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import styled from "styled-components";
-import BurgerMenu from "./components/BurgerMenu";
 import GlobalStyles from "./components/GlobalStyles";
 import Header from "./components/Header";
-import Background from "./img/background-stars.svg";
+import BurgerMenu from "./components/BurgerMenu";
 import Planet from "./pages/Planet";
+import Background from "./img/background-stars.svg";
 
 function App() {
   const [showMenu, setShowMenu] = useState<boolean>(false);
+  const [info, setInfo] = useState<string>("overview");
+
   const colors = [
     "#419EBB",
     "#F7CC7F",
@@ -21,7 +23,8 @@ function App() {
     "#497EFA",
   ];
 
-  const [info, setInfo] = useState<string>("overview");
+  const location = useLocation();
+  const pathname = location.pathname;
 
   return (
     <>
@@ -34,18 +37,23 @@ function App() {
           />
         </Helmet>
       </HelmetProvider>
-
+      
       <MainContainer>
-        <Header showMenu={showMenu} setShowMenu={setShowMenu} />
+        <Header
+          showMenu={showMenu}
+          setShowMenu={setShowMenu}
+          pathname={pathname}
+        />
         {showMenu ? (
           <BurgerMenu setShowMenu={setShowMenu} colors={colors} />
         ) : null}
-
         <Routes>
           <Route path="/" element={<Navigate to="/mercury" />} />
           <Route
             path="/:name"
-            element={<Planet info={info} setInfo={setInfo} />}
+            element={
+              <Planet info={info} setInfo={setInfo} pathname={pathname} />
+            }
           />
         </Routes>
       </MainContainer>
